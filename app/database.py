@@ -5,12 +5,14 @@ from psycopg2.extras import RealDictCursor
 import time
 import psycopg2
 from urllib.parse import quote
+from .config import settings
 
-password = 'Sustain@2023'
+password = settings.database_password
 encoded_password = quote(password, safe='')
 
-#SQL_ALCHEMY_DATABASE_URL = 'postgresql://<username>:<password><@ip-address/hostname>/<database_name>'
-SQL_ALCHEMY_DATABASE_URL = f'postgresql://postgres:{encoded_password}@localhost/fastapi'
+
+SQL_ALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{encoded_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
+
 engine = create_engine(SQL_ALCHEMY_DATABASE_URL)
 
 
